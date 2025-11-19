@@ -26,12 +26,14 @@
 - [ ] Create tokenomics visualization (pie chart or similar)
 - [ ] Add Discord and Twitter icons/links
 
-## Phase 2: GitHub & Vercel Setup
+## Phase 2: GitHub & Vercel Setup (Current)
 
-- [ ] Create GitHub repository
+- [ ] Create .gitignore file
+- [ ] Initialize Git repository locally
+- [ ] Create GitHub repository (WLKRS/apex-racers-landing)
 - [ ] Push code to GitHub
-- [ ] Connect to Vercel for deployment
-- [ ] Configure custom domain (if needed)
+- [ ] Connect GitHub to Vercel
+- [ ] Configure Vercel deployment settings
 - [ ] Test live deployment
 
 ## Phase 3: Smart Contracts & Backend Integration
