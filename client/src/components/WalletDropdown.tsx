@@ -1,4 +1,5 @@
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { Button } from "@/components/ui/button";
 import { Wallet, ChevronDown, LogOut } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -24,10 +25,12 @@ export default function WalletDropdown() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const { setVisible: setWalletModalVisible } = useWalletModal();
+
   if (!connected || !publicKey) {
     return (
       <Button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setWalletModalVisible(true)}
         className="hidden md:flex items-center gap-2 bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition-all"
       >
         <Wallet size={18} />
