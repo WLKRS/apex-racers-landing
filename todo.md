@@ -104,3 +104,26 @@
 - [ ] Test dashboard functionality
 - [ ] Deploy to Vercel
 
+
+## Phase 6: Solana RPC Integration (Current)
+
+- [ ] Integrate Solana RPC into dashboard
+- [ ] Fetch real SOL balance from blockchain
+- [ ] Fetch real NFT cars from user wallet
+- [ ] Display real transaction history
+
+## Phase 7: Database Backend Setup
+
+- [ ] Add database feature with webdev_add_feature
+- [ ] Create database schema for game data
+- [ ] Set up API routes
+
+## Phase 8: Racing Game Implementation
+
+- [ ] Create Racing page with game mechanics
+- [ ] Implement race simulation
+- [ ] Add reward calculation
+- [ ] Create Garage page
+- [ ] Create Refuel page
+- [ ] Test all game mechanics
+

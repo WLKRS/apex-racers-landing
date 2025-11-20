@@ -1,9 +1,14 @@
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Zap, BarChart, Users, Fuel, Wrench } from "lucide-react";
 import { APP_TITLE } from "@/const";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
+  // The userAuth hooks provides authentication state
+  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
+  let { user, loading, error, isAuthenticated, logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans">
       <Navbar />
