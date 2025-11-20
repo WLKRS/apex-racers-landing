@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const sections = [
   { id: "intro", label: "Introdução" },
@@ -24,8 +25,9 @@ export default function Whitepaper() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+      <Navbar />
       {/* Header */}
-      <div className="border-b border-slate-800 bg-slate-950 sticky top-0 z-40">
+      <div className="border-b border-slate-800 bg-slate-950 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-4xl font-bold text-cyan-400">Apex Racers Whitepaper</h1>
           <p className="text-slate-400 mt-2">A Nova Geração de Corridas na Solana</p>
