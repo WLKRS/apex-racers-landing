@@ -47,9 +47,19 @@ const trpcClient = trpc.createClient({
       url: "/api/trpc",
       transformer: superjson,
       fetch(input, init) {
+        // Get Solana wallet address from sessionStorage if available
+        const headers = new Headers(init?.headers || {});
+        
+        // Try to get wallet address from sessionStorage (set by WalletContext)
+        const walletAddress = sessionStorage.getItem("solana_wallet_address");
+        if (walletAddress) {
+          headers.set("x-wallet-address", walletAddress);
+        }
+        
         return globalThis.fetch(input, {
           ...(init ?? {}),
           credentials: "include",
+          headers,
         });
       },
     }) as any,

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from "react";
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider, useWallet } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
@@ -30,12 +30,30 @@ export function SolanaWalletProvider({ children }: { children: React.ReactNode }
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <WalletContext.Provider value={{}}>
+          <WalletContextWrapper>
             {children}
-          </WalletContext.Provider>
+          </WalletContextWrapper>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
+  );
+}
+
+function WalletContextWrapper({ children }: { children: React.ReactNode }) {
+  const { publicKey } = useWallet();
+
+  React.useEffect(() => {
+    if (publicKey) {
+      sessionStorage.setItem("solana_wallet_address", publicKey.toString());
+    } else {
+      sessionStorage.removeItem("solana_wallet_address");
+    }
+  }, [publicKey]);
+
+  return (
+    <WalletContext.Provider value={{}}>
+      {children}
+    </WalletContext.Provider>
   );
 }
 
