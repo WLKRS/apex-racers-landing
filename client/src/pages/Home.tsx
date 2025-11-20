@@ -19,7 +19,7 @@ export default function Home() {
             <a href="#tokenomics" className="hover:text-cyan-400 transition-colors">
               Tokenomics
             </a>
-            <a href="#" className="hover:text-cyan-400 transition-colors">
+            <a href="/whitepaper" className="hover:text-cyan-400 transition-colors">
               Whitepaper
             </a>
           </div>

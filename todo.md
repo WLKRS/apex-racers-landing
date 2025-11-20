@@ -68,3 +68,12 @@
 - Whitepaper v1.2 is finalized and in standby
 - Design identity: Clean, modern, dark theme with cyan/magenta accents
 - Tech stack: Next.js, Tailwind CSS, Solana blockchain
+
+## Phase 3: Whitepaper Page (Current)
+
+- [x] Create Whitepaper page component with all sections
+- [x] Add navigation sidebar for whitepaper sections
+- [x] Update navbar with Whitepaper link
+- [ ] Test whitepaper page functionality
+- [ ] Deploy to Vercel
+
