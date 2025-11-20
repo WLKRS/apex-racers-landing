@@ -1,13 +1,15 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { Button } from "@/components/ui/button";
-import { Wallet, ChevronDown, LogOut } from "lucide-react";
+import { Wallet, ChevronDown, LogOut, LayoutDashboard } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "wouter";
 
 export default function WalletDropdown() {
   const { connected, publicKey, disconnect, wallet } = useWallet();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [, navigate] = useLocation();
 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
@@ -75,6 +77,16 @@ export default function WalletDropdown() {
 
           {/* Action Buttons */}
           <div className="p-4 space-y-2">
+            <Button
+              onClick={() => {
+                navigate("/dashboard");
+                setIsOpen(false);
+              }}
+              className="w-full bg-purple-600 text-white font-bold hover:bg-purple-500 transition-all flex items-center justify-center gap-2"
+            >
+              <LayoutDashboard size={16} />
+              Dashboard
+            </Button>
             <Button
               onClick={() => {
                 setIsOpen(false);

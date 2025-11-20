@@ -95,3 +95,12 @@
 - [ ] Display wallet status in dropdown
 - [ ] Test dropdown interaction
 
+
+## Phase 5: Player Dashboard (Current)
+
+- [x] Create mock data for dashboard
+- [x] Build Dashboard page with all sections
+- [x] Add Dashboard route and navigation
+- [ ] Test dashboard functionality
+- [ ] Deploy to Vercel
+
