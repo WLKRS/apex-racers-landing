@@ -1,24 +1,21 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { Loader2, Zap, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Mint() {
-  const { user, isAuthenticated } = useAuth();
+  const { connected, publicKey } = useWallet();
   const [paymentMethod, setPaymentMethod] = useState<"SOL" | "RCN">("SOL");
   const [isMinting, setIsMinting] = useState(false);
-
-  // Fetch mint costs
-  const { data: mintCosts, isLoading: costsLoading } = trpc.game.getMintCosts.useQuery();
 
   // Fetch player's garage
   const { data: garage, isLoading: garageLoading } = trpc.game.getGarage.useQuery(
     undefined,
-    { enabled: isAuthenticated }
+    { enabled: connected }
   );
 
   // Mint car mutation
@@ -36,8 +33,8 @@ export default function Mint() {
   });
 
   const handleMint = async () => {
-    if (!isAuthenticated) {
-      toast.error("Conecte sua carteira primeiro!");
+    if (!connected || !publicKey) {
+      toast.error("Conecte sua carteira Solana primeiro!");
       return;
     }
 
@@ -49,13 +46,13 @@ export default function Mint() {
     }
   };
 
-  if (!isAuthenticated) {
+  if (!connected || !publicKey) {
     return (
       <div className="min-h-screen bg-slate-950 text-white">
         <Navbar />
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-4xl font-bold text-cyan-400 mb-4">Mintear Carro</h1>
-          <p className="text-slate-300 mb-8">Conecte sua carteira para mintear um novo carro</p>
+          <p className="text-slate-300 mb-8">Conecte sua carteira Solana para mintear um novo carro</p>
         </div>
       </div>
     );
@@ -70,6 +67,7 @@ export default function Mint() {
         <div className="space-y-2">
           <h1 className="text-4xl font-bold text-cyan-400">Mintear Novo Carro</h1>
           <p className="text-slate-400">Crie um carro único com stats aleatórios baseados em raridade</p>
+          <p className="text-sm text-yellow-400">🧪 Modo Teste - Sem custos</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -139,32 +137,34 @@ export default function Mint() {
               </div>
             </Card>
 
-            {/* Mint Costs */}
+            {/* Stats Preview */}
             <Card className="bg-slate-900 border-slate-800 p-6">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Zap className="text-cyan-400" size={24} />
-                Custos de Mint
-              </h2>
-              {costsLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="animate-spin text-cyan-400" size={32} />
+              <h2 className="text-2xl font-bold mb-4">📊 Stats do Carro</h2>
+              <p className="text-slate-400 mb-4">Cada carro recebe stats aleatórios baseados em sua raridade:</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-slate-800 border border-slate-700 rounded-lg p-3">
+                  <p className="text-xs text-slate-400">Velocidade</p>
+                  <p className="text-lg font-bold text-cyan-400">1-150</p>
                 </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {mintCosts?.map((cost) => (
-                    <div key={cost.rarity} className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-                      <p className="text-sm text-slate-400 mb-2">{cost.rarity}</p>
-                      <p className="text-lg font-bold text-cyan-400">{cost.costSOL} SOL</p>
-                      <p className="text-xs text-slate-500">ou {cost.costRCN.toLocaleString()} RCN</p>
-                    </div>
-                  ))}
+                <div className="bg-slate-800 border border-slate-700 rounded-lg p-3">
+                  <p className="text-xs text-slate-400">Aceleração</p>
+                  <p className="text-lg font-bold text-cyan-400">1-150</p>
                 </div>
-              )}
+                <div className="bg-slate-800 border border-slate-700 rounded-lg p-3">
+                  <p className="text-xs text-slate-400">Manuseio</p>
+                  <p className="text-lg font-bold text-cyan-400">1-150</p>
+                </div>
+                <div className="bg-slate-800 border border-slate-700 rounded-lg p-3">
+                  <p className="text-xs text-slate-400">Porta-Malas</p>
+                  <p className="text-lg font-bold text-cyan-400">1-150</p>
+                </div>
+              </div>
             </Card>
 
             {/* Payment Method Selection */}
             <Card className="bg-slate-900 border-slate-800 p-6">
               <h2 className="text-2xl font-bold mb-4">Método de Pagamento</h2>
+              <p className="text-slate-400 mb-4 text-sm">🧪 Modo teste - Sem custos</p>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setPaymentMethod("SOL")}
@@ -176,7 +176,7 @@ export default function Mint() {
                 >
                   <div className="text-2xl mb-2">◎</div>
                   <p className="font-bold">SOL</p>
-                  <p className="text-sm text-slate-400">Solana Blockchain</p>
+                  <p className="text-sm text-slate-400">Solana</p>
                 </button>
                 <button
                   onClick={() => setPaymentMethod("RCN")}
@@ -188,7 +188,7 @@ export default function Mint() {
                 >
                   <div className="text-2xl mb-2">⚡</div>
                   <p className="font-bold">RCN</p>
-                  <p className="text-sm text-slate-400">Token do Jogo</p>
+                  <p className="text-sm text-slate-400">Token</p>
                 </button>
               </div>
             </Card>
@@ -207,7 +207,7 @@ export default function Mint() {
               ) : (
                 <>
                   <Sparkles className="mr-2" size={20} />
-                  Mintear Novo Carro
+                  Mintear Novo Carro (Grátis)
                 </>
               )}
             </Button>
@@ -263,7 +263,7 @@ export default function Mint() {
                 <li>• Carros com maior raridade têm stats melhores</li>
                 <li>• Cada carro tem stats aleatórios únicos</li>
                 <li>• Você pode mintear múltiplos carros</li>
-                <li>• Use SOL ou RCN para pagar o mint</li>
+                <li>• Modo teste - sem custos reais</li>
               </ul>
             </Card>
           </div>

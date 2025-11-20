@@ -98,25 +98,18 @@ export function generateNewCar(): {
 
 /**
  * Calculate mint cost based on rarity
- * Comum: 10 SOL, Incomum: 15 SOL, Raro: 25 SOL, Épico: 50 SOL, Lendário: 100 SOL, Mítico: 250 SOL
+ * TESTING MODE: All costs are 0 until production launch
  */
 export function getMintCostSOL(rarity: CarRarity): number {
-  const costs: Record<CarRarity, number> = {
-    "Comum": 10,
-    "Incomum": 15,
-    "Raro": 25,
-    "Épico": 50,
-    "Lendário": 100,
-    "Mítico": 250,
-  };
-
-  return costs[rarity];
+  // TODO: Set actual costs when launching production
+  // Comum: 10 SOL, Incomum: 15 SOL, Raro: 25 SOL, Épico: 50 SOL, Lendário: 100 SOL, Mítico: 250 SOL
+  return 0; // Testing mode - free minting
 }
 
 /**
  * Convert SOL cost to RCN equivalent (1 SOL = ~200 RCN based on tokenomics)
  */
 export function getMintCostRCN(rarity: CarRarity): number {
-  const solCost = getMintCostSOL(rarity);
-  return solCost * 200; // 1 SOL = 200 RCN
+  // TODO: Set actual costs when launching production
+  return 0; // Testing mode - free minting
 }
