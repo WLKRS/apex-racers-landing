@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useState } from "react";
+import WalletModal from "./WalletModal";
+import { Wallet } from "lucide-react";
 
 export default function Navbar() {
   const [location, navigate] = useLocation();
+  const { connected, publicKey } = useWallet();
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
+
+  const formatAddress = (address: string) => {
+    return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-sm border-b border-slate-800">
@@ -27,9 +37,29 @@ export default function Navbar() {
             Whitepaper
           </a>
         </div>
-        <Button className="hidden md:block bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition-all">
-          Entrar no Jogo
-        </Button>
+        {connected && publicKey ? (
+          <div className="hidden md:flex items-center gap-3">
+            <div className="bg-slate-800 px-4 py-2 rounded-lg text-sm">
+              <span className="text-slate-300">Carteira: </span>
+              <span className="text-cyan-400 font-mono">{formatAddress(publicKey.toBase58())}</span>
+            </div>
+            <Button
+              onClick={() => setWalletModalOpen(true)}
+              className="bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition-all"
+            >
+              Entrar no Jogo
+            </Button>
+          </div>
+        ) : (
+          <Button
+            onClick={() => setWalletModalOpen(true)}
+            className="hidden md:flex items-center gap-2 bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition-all"
+          >
+            <Wallet size={18} />
+            Conectar Carteira
+          </Button>
+        )}
+        <WalletModal open={walletModalOpen} onOpenChange={setWalletModalOpen} />
       </nav>
     </header>
   );

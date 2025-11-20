@@ -77,3 +77,13 @@
 - [ ] Test whitepaper page functionality
 - [ ] Deploy to Vercel
 
+
+## Phase 4: Solana Wallet Integration (Current)
+
+- [x] Install Solana wallet dependencies
+- [x] Create WalletProvider context
+- [x] Create wallet connection modal (Phantom + Solflare)
+- [x] Integrate modal into Navbar
+- [ ] Test wallet connection locally
+- [ ] Deploy to Vercel
+
