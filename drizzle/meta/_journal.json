@@ -15,6 +15,13 @@
       "when": 1763601715764,
       "tag": "0001_lively_redwing",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1763662611098,
+      "tag": "0002_strange_mister_fear",
+      "breakpoints": true
     }
   ]
 }

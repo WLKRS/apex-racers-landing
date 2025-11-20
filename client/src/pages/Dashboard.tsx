@@ -1,10 +1,10 @@
-import { mockDashboardData } from "@/lib/mockData";
 import Navbar from "@/components/Navbar";
 import { Wallet, Zap, Trophy, TrendingUp, Clock, Flame, Loader2 } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { getWalletBalance, getTokenBalance, getNFTCars, getRecentTransactions } from "@/lib/solanaService";
 import { PublicKey } from "@solana/web3.js";
+import { mockDashboardData } from "@/lib/mockData";
 
 interface DashboardState {
   solBalance: number;
@@ -94,7 +94,7 @@ export default function Dashboard() {
     );
   }
 
-  const data = mockDashboardData;
+  const data = state.loading ? mockDashboardData : { stats: mockDashboardData.stats, balances: { sol: state.solBalance, rcn: state.rcnBalance } };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -175,7 +175,7 @@ export default function Dashboard() {
             <div>
               <h2 className="text-2xl font-bold mb-4">Meus Carros</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {state.cars.map((car) => (
+                {(state.cars || mockDashboardData.cars).map((car) => (
                   <div key={car.id} className="bg-slate-900 border border-slate-800 rounded-lg p-4 hover:border-cyan-400 transition-colors">
                     <div className="text-5xl mb-3">{car.image || "🏎️"}</div>
                     <h3 className="font-bold text-lg mb-2">{car.name}</h3>
@@ -226,7 +226,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {state.transactions.map((tx, index) => (
+                      {(state.transactions || mockDashboardData.transactions).map((tx, index) => (
                         <tr key={tx.signature || index} className="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
                           <td className="px-6 py-4 text-sm">
                             <span className="inline-block px-2 py-1 rounded bg-slate-800 text-xs font-semibold">

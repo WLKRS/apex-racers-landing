@@ -30,7 +30,7 @@ export const playerGarage = mysqlTable("playerGarage", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
   carName: varchar("carName", { length: 255 }).notNull(),
-  rarity: mysqlEnum("rarity", ["Comum", "Incomum", "Raro", "Épico", "Lendário", "Mítico", "Divino"]).notNull(),
+  rarity: mysqlEnum("rarity", ["Comum", "Incomum", "Raro", "Épico", "Lendário", "Mítico"]).notNull(),
   level: int("level").default(1).notNull(),
   fuel: int("fuel").default(100).notNull(),
   maxFuel: int("maxFuel").default(100).notNull(),
@@ -95,3 +95,66 @@ export const refuelTransactions = mysqlTable("refuelTransactions", {
 
 export type RefuelTransaction = typeof refuelTransactions.$inferSelect;
 export type InsertRefuelTransaction = typeof refuelTransactions.$inferInsert;
+// Rental system tables
+export const rentalListings = mysqlTable("rentalListings", {
+  id: int("id").autoincrement().primaryKey(),
+  carId: int("carId").notNull(),
+  ownerId: int("ownerId").notNull(),
+  pricePerDay: int("pricePerDay").notNull(),
+  currency: mysqlEnum("currency", ["SOL", "RCN"]).notNull(),
+  isActive: int("isActive").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RentalListing = typeof rentalListings.$inferSelect;
+export type InsertRentalListing = typeof rentalListings.$inferInsert;
+
+export const activeRentals = mysqlTable("activeRentals", {
+  id: int("id").autoincrement().primaryKey(),
+  carId: int("carId").notNull(),
+  rentalListingId: int("rentalListingId").notNull(),
+  renterId: int("renterId").notNull(),
+  ownerId: int("ownerId").notNull(),
+  startDate: timestamp("startDate").notNull(),
+  endDate: timestamp("endDate").notNull(),
+  totalCost: int("totalCost").notNull(),
+  currency: mysqlEnum("currency", ["SOL", "RCN"]).notNull(),
+  status: mysqlEnum("status", ["active", "completed", "cancelled"]).default("active").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ActiveRental = typeof activeRentals.$inferSelect;
+export type InsertActiveRental = typeof activeRentals.$inferInsert;
+
+// Marketplace tables
+export const marketplaceListings = mysqlTable("marketplaceListings", {
+  id: int("id").autoincrement().primaryKey(),
+  carId: int("carId").notNull(),
+  sellerId: int("sellerId").notNull(),
+  price: int("price").notNull(),
+  currency: mysqlEnum("currency", ["SOL", "RCN"]).notNull(),
+  isActive: int("isActive").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MarketplaceListing = typeof marketplaceListings.$inferSelect;
+export type InsertMarketplaceListing = typeof marketplaceListings.$inferInsert;
+
+export const marketplaceTransactions = mysqlTable("marketplaceTransactions", {
+  id: int("id").autoincrement().primaryKey(),
+  listingId: int("listingId").notNull(),
+  carId: int("carId").notNull(),
+  sellerId: int("sellerId").notNull(),
+  buyerId: int("buyerId").notNull(),
+  price: int("price").notNull(),
+  currency: mysqlEnum("currency", ["SOL", "RCN"]).notNull(),
+  transactionHash: varchar("transactionHash", { length: 255 }),
+  status: mysqlEnum("status", ["pending", "completed", "failed"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+});
+
+export type MarketplaceTransaction = typeof marketplaceTransactions.$inferSelect;
+export type InsertMarketplaceTransaction = typeof marketplaceTransactions.$inferInsert;

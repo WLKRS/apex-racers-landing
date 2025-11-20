@@ -1,129 +1,73 @@
 # Apex Racers Landing Page - TODO
 
-## Phase 1: Landing Page Frontend (Current)
+## Phase 1: Landing Page & Deployment ✅
 
-### Design & Layout
-- [x] Implement hero section with title and CTAs
-- [x] Create navbar with navigation links
-- [x] Build three pillars section (Economy, ROI, Staking)
-- [x] Implement gameplay modes section (Arrancada, Circuito, Exploração)
-- [x] Create tokenomics display section
-- [x] Build community section with Discord/Twitter links
-- [x] Implement footer with links and branding
-- [x] Add responsive design for mobile/tablet/desktop
+- [x] Landing page with hero, sections, and footer
+- [x] Whitepaper page with all sections (correct content)
+- [x] Navbar with navigation
+- [x] GitHub repository created
+- [x] Vercel deployment configured
+- [x] Live at: https://apex-racers-landing.vercel.app/
 
-### Styling & Identity
-- [ ] Set up color palette (dark background, cyan primary, magenta secondary)
-- [ ] Configure typography (Inter font)
-- [ ] Add animations and hover effects
-- [ ] Implement glow effects for buttons
-- [ ] Ensure accessibility (contrast, focus states)
+## Phase 2: Wallet Integration ✅
 
-### Content & Assets
-- [ ] Create hero image/illustration of racing car
-- [ ] Design icons for the three pillars
-- [ ] Design icons for gameplay modes
-- [ ] Create tokenomics visualization (pie chart or similar)
-- [ ] Add Discord and Twitter icons/links
+- [x] Solana wallet connection (Phantom + Solflare)
+- [x] Wallet dropdown with status display
+- [x] Logout functionality
+- [x] Formatted address display (XXXX...XXXX)
 
-## Phase 2: GitHub & Vercel Setup (Current)
+## Phase 3: Dashboard ✅
 
-- [ ] Create .gitignore file
-- [ ] Initialize Git repository locally
-- [ ] Create GitHub repository (WLKRS/apex-racers-landing)
-- [ ] Push code to GitHub
-- [ ] Connect GitHub to Vercel
-- [ ] Configure Vercel deployment settings
-- [ ] Test live deployment
+- [x] Dashboard page with real Solana RPC data
+- [x] Real SOL balance fetching
+- [x] Real NFT/transaction history
+- [x] Game statistics display
 
-## Phase 3: Smart Contracts & Backend Integration
+## Phase 4: Database & Backend Setup ✅
 
-- [ ] Design Anchor smart contracts for game logic
-- [ ] Implement token ($RCN) contract
-- [ ] Create NFT minting contract (Metaplex)
-- [ ] Build oracle integration for price feeds
-- [ ] Implement staking contract
-- [ ] Create marketplace contract
+- [x] Database feature added (MySQL/TiDB)
+- [x] tRPC backend configured
+- [x] User authentication system
+- [x] Database schema for game data
 
-## Phase 4: Frontend Game Integration
+## Phase 5: Game System - Offchain Cars & Bi-Token Rental (Current)
 
-- [ ] Wallet integration (Phantom, Solflare)
-- [ ] Connect to smart contracts
-- [ ] Implement game dashboard
-- [ ] Build racing mechanics
-- [ ] Create marketplace UI
-- [ ] Implement staking interface
+### Database Schema
+- [ ] Update schema: cars table (offchain, linked to wallet)
+- [ ] Add rental_listings table (SOL or RCN options)
+- [ ] Add marketplace_listings table (buy/sell)
+- [ ] Add rental_history table (track rentals)
+- [ ] Add upgrades/items table (crafting items)
+- [ ] Push migrations to database
 
-## Phase 5: Community & Launch
+### Backend APIs (tRPC)
+- [ ] Create car management procedures
+- [ ] Create rental system procedures (list, rent, unrent)
+- [ ] Create marketplace procedures (list, buy, sell)
+- [ ] Create inventory management procedures
 
-- [ ] Create Discord server
-- [ ] Set up Twitter/X account
-- [ ] Develop marketing materials
-- [ ] Plan whitelist/mint event
-- [ ] Community management setup
+### Frontend Pages
+- [ ] Build Garage page (list cars, manage rentals, equip upgrades)
+- [ ] Build Marketplace page (buy/rent filters, bi-token options)
+- [ ] Build Racing page (race simulation, rewards, mechanics)
+- [ ] Build Refuel page (fuel management, costs)
 
----
+### Game Mechanics
+- [ ] Race simulation logic
+- [ ] Reward calculation system
+- [ ] Rental income distribution
+- [ ] Fuel consumption system
+- [ ] Upgrade effects on car stats
+
+## Phase 6: Testing & Deployment
+
+- [ ] Test all game features locally
+- [ ] Test wallet integration with real transactions
+- [ ] Test marketplace and rental system
+- [ ] Deploy to Vercel
+- [ ] Test on live environment
 
 ## Notes
-- Whitepaper v1.2 is finalized and in standby
-- Design identity: Clean, modern, dark theme with cyan/magenta accents
-- Tech stack: Next.js, Tailwind CSS, Solana blockchain
-
-## Phase 3: Whitepaper Page (Current)
-
-- [x] Create Whitepaper page component with all sections
-- [x] Add navigation sidebar for whitepaper sections
-- [x] Update navbar with Whitepaper link
-- [ ] Test whitepaper page functionality
-- [ ] Deploy to Vercel
-
-
-## Phase 4: Solana Wallet Integration (Current)
-
-- [x] Install Solana wallet dependencies
-- [x] Create WalletProvider context
-- [x] Create wallet connection modal (Phantom + Solflare)
-- [x] Integrate modal into Navbar
-- [ ] Test wallet connection locally
-- [ ] Deploy to Vercel
-
-
-## Phase 4.1: Wallet Dropdown UI Fix
-
-- [ ] Replace modal with dropdown menu
-- [ ] Add logout functionality
-- [ ] Display wallet status in dropdown
-- [ ] Test dropdown interaction
-
-
-## Phase 5: Player Dashboard (Current)
-
-- [x] Create mock data for dashboard
-- [x] Build Dashboard page with all sections
-- [x] Add Dashboard route and navigation
-- [ ] Test dashboard functionality
-- [ ] Deploy to Vercel
-
-
-## Phase 6: Solana RPC Integration (Current)
-
-- [ ] Integrate Solana RPC into dashboard
-- [ ] Fetch real SOL balance from blockchain
-- [ ] Fetch real NFT cars from user wallet
-- [ ] Display real transaction history
-
-## Phase 7: Database Backend Setup
-
-- [ ] Add database feature with webdev_add_feature
-- [ ] Create database schema for game data
-- [ ] Set up API routes
-
-## Phase 8: Racing Game Implementation
-
-- [ ] Create Racing page with game mechanics
-- [ ] Implement race simulation
-- [ ] Add reward calculation
-- [ ] Create Garage page
-- [ ] Create Refuel page
-- [ ] Test all game mechanics
-
+- **Architecture**: Offchain cars (database) + Bi-token rental (SOL/RCN)
+- **Benefits**: No NFT risks, full marketplace control, better UX
+- **Tech**: Solana RPC, tRPC backend, React frontend, MySQL database
