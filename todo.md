@@ -87,3 +87,11 @@
 - [ ] Test wallet connection locally
 - [ ] Deploy to Vercel
 
+
+## Phase 4.1: Wallet Dropdown UI Fix
+
+- [ ] Replace modal with dropdown menu
+- [ ] Add logout functionality
+- [ ] Display wallet status in dropdown
+- [ ] Test dropdown interaction
+
