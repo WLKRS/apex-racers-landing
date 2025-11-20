@@ -8,6 +8,7 @@ import { SolanaWalletProvider } from "./contexts/WalletContext";
 import Home from "./pages/Home";
 import Whitepaper from "./pages/Whitepaper";
 import Dashboard from "./pages/Dashboard";
+import Mint from "./pages/Mint";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -16,6 +17,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/whitepaper"} component={Whitepaper} />
       <Route path={"/dashboard"} component={Dashboard} />
+      <Route path={"/mint"} component={Mint} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

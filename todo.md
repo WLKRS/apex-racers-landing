@@ -30,21 +30,48 @@
 - [x] User authentication system
 - [x] Database schema for game data
 
-## Phase 5: Game System - Offchain Cars & Bi-Token Rental (Current)
+## Phase 5: Fix Build Errors ✅
+
+- [x] Remove vitePluginManusRuntime causing Invalid URL error
+- [x] Fix getLoginUrl with environment variable defaults
+- [x] Rebuild and deploy to Vercel
+- [x] Verify site is working
+
+## Phase 6: Car Mint System (Current)
 
 ### Database Schema
-- [ ] Update schema: cars table (offchain, linked to wallet)
-- [ ] Add rental_listings table (SOL or RCN options)
-- [ ] Add marketplace_listings table (buy/sell)
-- [ ] Add rental_history table (track rentals)
-- [ ] Add upgrades/items table (crafting items)
+- [ ] Create cars table (id, owner_wallet, name, rarity, level, stats)
+- [ ] Create car_stats table (acceleration, speed, handling, trunk_space)
+- [ ] Create rental_listings table (car_id, owner, price_sol, price_rcn, available)
+- [ ] Create marketplace_listings table (car_id, seller, price, status)
+- [ ] Create rental_history table (rental_id, car_id, renter, owner, duration)
+- [ ] Create upgrades table (id, name, effect, cost_rcn)
+- [ ] Create player_inventory table (player_id, upgrade_id, equipped)
 - [ ] Push migrations to database
 
-### Backend APIs (tRPC)
-- [ ] Create car management procedures
+### Car Mint API (tRPC)
+- [ ] Create mint car procedure
+- [ ] Implement rarity system (Comum 60%, Raro 25%, Epico 12%, Lendario 3%)
+- [ ] Generate random stats based on rarity
+- [ ] Assign car to player wallet
+- [ ] Create list player cars procedure
+- [ ] Add cost for minting (SOL or RCN)
+
+### Frontend - Mint Page
+- [ ] Create Mint Car page (/mint)
+- [ ] Show mint cost
+- [ ] Display rarity distribution
+- [ ] Show preview of generated car stats
+- [ ] Button to mint new car
+- [ ] Confirmation dialog
+
+## Phase 7: Game APIs (tRPC)
+
+### Backend APIs
+- [ ] Create car management procedures (list, get, update)
 - [ ] Create rental system procedures (list, rent, unrent)
 - [ ] Create marketplace procedures (list, buy, sell)
-- [ ] Create inventory management procedures
+- [ ] Create inventory management procedures (equip, unequip)
 
 ### Frontend Pages
 - [ ] Build Garage page (list cars, manage rentals, equip upgrades)
@@ -59,7 +86,7 @@
 - [ ] Fuel consumption system
 - [ ] Upgrade effects on car stats
 
-## Phase 6: Testing & Deployment
+## Phase 8: Testing & Deployment
 
 - [ ] Test all game features locally
 - [ ] Test wallet integration with real transactions

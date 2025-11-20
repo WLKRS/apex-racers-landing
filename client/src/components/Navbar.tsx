@@ -28,6 +28,12 @@ export default function Navbar() {
           <a href="/whitepaper" className="hover:text-cyan-400 transition-colors">
             Whitepaper
           </a>
+          <a href="/mint" className="hover:text-cyan-400 transition-colors">
+            Mintear
+          </a>
+          <a href="/dashboard" className="hover:text-cyan-400 transition-colors">
+            Dashboard
+          </a>
         </div>
         <WalletDropdown />
       </nav>

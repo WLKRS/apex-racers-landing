@@ -148,3 +148,14 @@ export async function createRefuelTransaction(transaction: InsertRefuelTransacti
   if (!db) return null;
   return db.insert(refuelTransactions).values(transaction);
 }
+
+// Car mint helper
+export async function mintNewCar(userId: number, carData: InsertPlayerGarage) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(playerGarage).values(carData);
+  const insertedId = (result as any).insertId;
+  
+  return getCarById(insertedId);
+}
