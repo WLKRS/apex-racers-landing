@@ -21,9 +21,9 @@ export default function Home() {
             <Button className="bg-cyan-500 text-slate-950 font-bold py-3 px-8 text-lg hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/50">
               Mint em Breve
             </Button>
-            <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-800 font-bold py-3 px-8 text-lg">
+            <a href="/whitepaper" className="border border-slate-600 text-white hover:bg-slate-800 font-bold py-3 px-8 text-lg rounded-lg inline-block transition-colors">
               Leia o Whitepaper
-            </Button>
+            </a>
           </div>
         </section>
 
@@ -93,7 +93,7 @@ export default function Home() {
                 Com 55% do supply destinado a recompensas e um sistema agressivo de queima, o $RCN é projetado para a
                 longevidade e sustentabilidade do ecossistema.
               </p>
-              <a href="#" className="text-cyan-400 font-bold text-lg hover:underline">
+              <a href="/whitepaper" className="text-cyan-400 font-bold text-lg hover:underline">
                 Ver detalhes no Whitepaper →
               </a>
             </div>
@@ -140,7 +140,7 @@ export default function Home() {
               Twitter
             </a>
             <a
-              href="#"
+              href="/whitepaper"
               className="bg-purple-600 text-white font-bold py-4 px-8 rounded-lg flex items-center justify-center gap-3 text-lg hover:bg-purple-500 transition-colors"
             >
               Whitepaper
