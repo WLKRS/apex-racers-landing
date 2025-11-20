@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import { Wallet, Zap, Trophy, TrendingUp, Clock, Flame, Loader2 } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
-import { getSolBalance, getNFTCars, getRecentTransactions } from "@/lib/solanaService";
+import { getWalletBalance, getTokenBalance, getNFTCars, getRecentTransactions } from "@/lib/solanaService";
 import { PublicKey } from "@solana/web3.js";
 
 interface DashboardState {
@@ -35,7 +35,8 @@ export default function Dashboard() {
         setState((prev) => ({ ...prev, loading: true, error: null }));
 
         // Fetch SOL balance
-        const solBalance = await getSolBalance(publicKey);
+        const solBalance = await getWalletBalance(publicKey);
+        const rcnBalance = await getTokenBalance(publicKey);
 
         // Fetch NFT cars
         const cars = await getNFTCars(publicKey);
@@ -46,7 +47,7 @@ export default function Dashboard() {
         setState((prev) => ({
           ...prev,
           solBalance,
-          rcnBalance: mockDashboardData.balances.rcn, // Keep mock RCN for now
+          rcnBalance,
           cars: cars.length > 0 ? cars : mockDashboardData.cars, // Use real cars if available, otherwise mock
           transactions: transactions.length > 0 ? transactions : mockDashboardData.transactions,
           loading: false,

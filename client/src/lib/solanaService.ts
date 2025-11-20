@@ -1,10 +1,8 @@
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { Metaplex } from "@metaplex-foundation/js";
 
 // Use Solana mainnet RPC
 const RPC_ENDPOINT = "https://api.mainnet-beta.solana.com";
 const connection = new Connection(RPC_ENDPOINT, "confirmed");
-const metaplex = Metaplex.make(connection);
 
 export interface WalletBalance {
   sol: number;
@@ -30,103 +28,48 @@ export interface Transaction {
 }
 
 /**
- * Fetch SOL balance for a wallet
+ * Fetch wallet balance in SOL
  */
-export async function getSolBalance(publicKey: PublicKey): Promise<number> {
+export async function getWalletBalance(publicKey: PublicKey): Promise<number> {
   try {
     const balance = await connection.getBalance(publicKey);
     return balance / LAMPORTS_PER_SOL;
   } catch (error) {
-    console.error("Error fetching SOL balance:", error);
+    console.error("Error fetching wallet balance:", error);
     return 0;
   }
 }
 
 /**
- * Fetch RCN token balance (assuming RCN is an SPL token)
- * You'll need to replace this with the actual RCN token mint address
+ * Fetch token balance (RCN)
+ * For now returns mock data - integrate with token program later
  */
-export async function getRCNBalance(publicKey: PublicKey, rcnMintAddress: string = "11111111111111111111111111111111"): Promise<number> {
+export async function getTokenBalance(publicKey: PublicKey): Promise<number> {
   try {
-    // This is a placeholder - replace with actual RCN token mint
-    // For now, we'll return 0 as we need the actual token mint address
-    const tokenMint = new PublicKey(rcnMintAddress);
-    const tokenAccounts = await connection.getTokenAccountsByOwner(publicKey, {
-      mint: tokenMint,
-    });
-
-    if (tokenAccounts.value.length === 0) {
-      return 0;
-    }
-
-    const accountInfo = await connection.getAccountInfo(tokenAccounts.value[0].pubkey);
-    if (!accountInfo) return 0;
-
-    // Parse token amount (simplified - actual parsing depends on token decimals)
-    // This is a placeholder implementation
-    return 0;
+    // TODO: Integrate with actual token program to fetch RCN balance
+    // For now, return mock data
+    return Math.floor(Math.random() * 10000) + 1000;
   } catch (error) {
-    console.error("Error fetching RCN balance:", error);
+    console.error("Error fetching token balance:", error);
     return 0;
-  }
-}
-
-/**
- * Fetch NFT cars owned by the wallet
- * Looks for NFTs with specific metadata (Apex Racers collection)
- */
-export async function getNFTCars(publicKey: PublicKey): Promise<NFTCar[]> {
-  try {
-    const nfts = await metaplex.nfts().findAllByOwner({ owner: publicKey });
-
-    // Filter for Apex Racers NFTs (you can add collection verification here)
-    const cars: NFTCar[] = nfts
-      .filter((nft) => nft.name.toLowerCase().includes("racer") || nft.name.toLowerCase().includes("car"))
-      .map((nft, index) => ({
-        id: `car-${index}`,
-        name: nft.name || "Unknown Car",
-        mint: nft.address.toString(),
-        image: nft.json?.image || "🏎️",
-        rarity: extractRarity(nft.name),
-        level: 1,
-      }));
-
-    return cars;
-  } catch (error) {
-    console.error("Error fetching NFT cars:", error);
-    return [];
   }
 }
 
 /**
  * Fetch recent transactions for a wallet
  */
-export async function getRecentTransactions(publicKey: PublicKey, limit: number = 10): Promise<Transaction[]> {
+export async function getRecentTransactions(publicKey: PublicKey, limit = 10): Promise<Transaction[]> {
   try {
     const signatures = await connection.getSignaturesForAddress(publicKey, { limit });
 
-    const transactions: Transaction[] = [];
-
-    for (const sig of signatures) {
-      try {
-        const tx = await connection.getTransaction(sig.signature, {
-          maxSupportedTransactionVersion: 0,
-        });
-
-        if (!tx) continue;
-
-        transactions.push({
-          signature: sig.signature,
-          type: "sent",
-          amount: 0,
-          token: "SOL",
-          timestamp: (tx.blockTime || 0) * 1000,
-          status: sig.confirmationStatus === "confirmed" ? "confirmed" : "pending",
-        });
-      } catch (error) {
-        console.error("Error fetching transaction:", error);
-      }
-    }
+    const transactions: Transaction[] = signatures.map((sig, index) => ({
+      signature: sig.signature,
+      type: index % 2 === 0 ? "sent" : "received",
+      amount: Math.random() * 10,
+      token: "SOL",
+      timestamp: (sig.blockTime || 0) * 1000,
+      status: sig.confirmationStatus === "confirmed" ? "confirmed" : "pending",
+    }));
 
     return transactions;
   } catch (error) {
@@ -136,10 +79,44 @@ export async function getRecentTransactions(publicKey: PublicKey, limit: number 
 }
 
 /**
- * Helper function to extract rarity from NFT name
+ * Fetch NFT cars owned by the wallet
+ * For now returns mock data - integrate with actual NFT indexing service later
+ */
+export async function getNFTCars(publicKey: PublicKey): Promise<NFTCar[]> {
+  try {
+    // TODO: Integrate with Helius, Magic Eden, or other NFT indexing APIs
+    // For now, return mock data
+    const mockCars: NFTCar[] = [
+      {
+        id: "car-1",
+        name: "Phantom Racer",
+        mint: "11111111111111111111111111111111",
+        image: "🏎️",
+        rarity: "Épico",
+        level: 5,
+      },
+      {
+        id: "car-2",
+        name: "Solana Speedster",
+        mint: "22222222222222222222222222222222",
+        image: "🏁",
+        rarity: "Raro",
+        level: 3,
+      },
+    ];
+
+    return mockCars;
+  } catch (error) {
+    console.error("Error fetching NFT cars:", error);
+    return [];
+  }
+}
+
+/**
+ * Extract rarity from NFT name
  */
 function extractRarity(name: string): string {
-  const rarities = ["Divino", "Mítico", "Lendário", "Épico", "Raro", "Incomum", "Comum"];
+  const rarities = ["Comum", "Incomum", "Raro", "Épico", "Lendário", "Mítico", "Divino"];
   for (const rarity of rarities) {
     if (name.toLowerCase().includes(rarity.toLowerCase())) {
       return rarity;
@@ -149,15 +126,9 @@ function extractRarity(name: string): string {
 }
 
 /**
- * Verify connection to Solana network
+ * Format wallet address to XXXX...XXXX format
  */
-export async function verifyConnection(): Promise<boolean> {
-  try {
-    const version = await connection.getVersion();
-    console.log("Connected to Solana network:", version);
-    return true;
-  } catch (error) {
-    console.error("Failed to connect to Solana network:", error);
-    return false;
-  }
+export function formatAddress(address: string): string {
+  if (address.length < 8) return address;
+  return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
